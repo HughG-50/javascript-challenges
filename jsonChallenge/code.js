@@ -19,10 +19,25 @@ function fahrenheitToCelsius(fahrenheitTemp){
     return celsiusTemp
 }
 
-function formatDate(){
+function formatTime(sunriseTime) {
+    let timeArr = sunriseTime.split('')
     
+    if(timeArr.length == 7){
+        timeArr.splice(4,1)
+        //console.log(timeArr)
+    } else if (timeArr.length == 6){
+        timeArr.splice(3,1, "0")
+        //console.log(timeArr)
+    }
+
+    timeArr[(timeArr.length)-2] = timeArr[(timeArr.length)-2].toUpperCase()
+    timeArr[(timeArr.length)-1] = timeArr[(timeArr.length)-1].toUpperCase()
+
+    return timeArr.join('')
 }
 
 for(i=0; i < 7; i++){
     console.log(`${forecastArr[i].day}, ${forecastArr[i].date}: ${forecastArr[i].text} with a high of ${Math.round(fahrenheitToCelsius(forecastArr[i].high))} *C, low of ${Math.round(fahrenheitToCelsius(forecastArr[i].low))} *C`)
 }
+
+console.log(`Sunrise: ${formatTime(weather.query.results.channel.astronomy.sunrise)}`)
