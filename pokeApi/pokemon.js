@@ -32,3 +32,33 @@ function getPokemonStats(pokemonName, callback){
 getPokemonStats('ditto', (statsArray) => {
     console.log(statsArray)
 })
+
+//data is only available within the callback function, hence to get pokemon2 accessible it needs to be within the other callback
+function whichPokemonIsHeavier(pokemonName1, pokemonName2, callback){
+    makeGetRequest(`https://pokeapi.co/api/v2/pokemon/${pokemonName1}`,
+        (rawPokemonData) => {
+            const pokemonData1 = JSON.parse(rawPokemonData)
+            //console.log(pokemonData1)
+            
+            makeGetRequest(`https://pokeapi.co/api/v2/pokemon/${pokemonName2}`,
+                //only in this callback do we have access to both of those pokemonData's
+                (rawPokemonData2) => {
+                    const pokemonData2 = JSON.parse(rawPokemonData)
+                    console.log(pokemonData1, pokemonData2)
+                    if(pokemonData1.weight > pokemonData2.weight){
+                        callback(`${pokemonData1.name} is ${pokemonData1.weight - pokemonData2.weight}kg heavier `)
+                    } else if (pokemonData1.weight < pokemonData2.weight){
+                        callback(`${pokemonData2.name} is ${pokemonData2.weight - pokemonData1.weight}kg heaver `)
+                    } else {
+                        callback(`${pokemonData1.name} and ${pokemonData2.name} are the same weight `)
+                    }
+                }
+            )
+        }
+    )
+    console.log("Here")
+}
+
+whichPokemonIsHeavier('ditto', 'charmander', (weightDescription) => {
+    console.log(weightDescription)
+})
