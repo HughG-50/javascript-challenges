@@ -1,7 +1,9 @@
 //Simple API for displaying the exchange rate between the base pair of USD or EUR against other currencies
 
+
+let basePair = 'USD';
 // const publicEndpoint = 'https://open.exchangerate-api.com/v6/latest'
-const freeEndPoint = 'https://v6.exchangerate-api.com/v6/ea62ff5ffc1dfea118f56539/latest/USD'
+const freeEndPoint = `https://v6.exchangerate-api.com/v6/ea62ff5ffc1dfea118f56539/latest/${basePair}`
 
 function getExchangeRate() {
     fetch(freeEndPoint)
