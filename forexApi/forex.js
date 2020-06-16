@@ -17,14 +17,59 @@
 //     .catch(err => console.log(err));
 // }
 
+const basePair = document.querySelector("#base-pair")
+const displayChoice = document.querySelector("#display-choice")
+
+const usdRate = document.querySelector("#usd-rate")
+const eurRate = document.querySelector("#eur-rate")
+const audRate = document.querySelector("#aud-rate")
+const cadRate = document.querySelector("#cad-rate")
+const chfRate = document.querySelector("#chf-rate")
+const gbpRate = document.querySelector("#gbp-rate")
+const jpyRate = document.querySelector("#jpy-rate")
+const nzdRate = document.querySelector("#nzd-rate")
+
 // Refactor to use async await for fetching from API
 async function getExchangeRate(basePair) {
-    const response = await fetch(`https://v6.exchangerate-api.com/v6/ea62ff5ffc1dfea118f56539/latest/${basePair}`);
+    const response = await fetch(`https://v6.exchangerate-api.com/v6/ea62ff5ffc1dfea118f56539/latest/${basePair.value}`);
     const exchangeData = await response.json();
-    const exchangeRates = exchangeData.conversion_rates;
     // console.log(exchangeData);
+    const exchangeRates = exchangeData.conversion_rates;
     console.log(exchangeRates);
+
+    const currentUsdRate = exchangeRates.USD;
+    const currentEurRate = exchangeRates.EUR;
+    const currentAudRate = exchangeRates.AUD;
+    const currentCadRate = exchangeRates.CAD;
+    const currentChfRate = exchangeRates.CHF;
+    const currentGbpRate = exchangeRates.GBP;
+    const currentJpyRate = exchangeRates.JPY;
+    const currentNzdRate = exchangeRates.NZD;
+
+    usdRate.innerHTML = `USD: ${currentUsdRate}`
+    eurRate.innerHTML = `EUR: ${currentEurRate}`
+    audRate.innerHTML = `AUD: ${currentAudRate}`
+    cadRate.innerHTML = `CAD: ${currentCadRate}`
+    chfRate.innerHTML = `CHF: ${currentChfRate}`
+    gbpRate.innerHTML = `GBP: ${currentGbpRate}`
+    jpyRate.innerHTML = `JPY: ${currentJpyRate}`
+    nzdRate.innerHTML = `NZD: ${currentNzdRate}`
 } 
 
-let basePair = 'USD';
-getExchangeRate(basePair)
+basePair.addEventListener("change", getExchangeRate(basePair));
+
+// searchBtn.addEventListener("click", () => {
+//   const pokemon = await getPokemon(searchBar.value)
+
+//   const image = pokemon.sprites.front_default
+//   const name = pokemon.name
+//   const hp = pokemon.stats[0].base_stat
+
+//   pokeImg.src = image
+//   pokeName.innerHTML = name
+//   pokeHp.innerHTML = `${hp}hp`
+// })
+
+
+// let basePair = "USD"
+// getExchangeRate(basePair)
