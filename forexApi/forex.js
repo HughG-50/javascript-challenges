@@ -6,17 +6,6 @@
 //REMEMBER THAT FETCHING FROM API IS ASYNC - NEED TO WAIT FOR DATA TO ARRIVE TO HAVE OUR OBJECT WITH DATA IN IT
 //better to use async await than chaining .thens in this case - i.e. tell JS to wait until async code is finished
 
-// function getExchangeRate() {
-//     fetch(freeEndPoint)
-//     .then(response => response.json())
-//     .then(data => {
-//         //console.log(data)
-//         console.log(data.base_code)
-//         console.log(data.conversion_rates)
-//     })
-//     .catch(err => console.log(err));
-// }
-
 const basePair = document.querySelector("#base-pair")
 const displayChoice = document.querySelector("#display-choice")
 
@@ -30,7 +19,7 @@ const jpyRate = document.querySelector("#jpy-rate")
 const nzdRate = document.querySelector("#nzd-rate")
 
 // Refactor to use async await for fetching from API
-async function getExchangeRate(basePair) {
+async function getExchangeRate() {
     const response = await fetch(`https://v6.exchangerate-api.com/v6/ea62ff5ffc1dfea118f56539/latest/${basePair.value}`);
     const exchangeData = await response.json();
     // console.log(exchangeData);
@@ -56,20 +45,8 @@ async function getExchangeRate(basePair) {
     nzdRate.innerHTML = `NZD: ${currentNzdRate}`
 } 
 
-basePair.addEventListener("change", getExchangeRate(basePair));
-
-// searchBtn.addEventListener("click", () => {
-//   const pokemon = await getPokemon(searchBar.value)
-
-//   const image = pokemon.sprites.front_default
-//   const name = pokemon.name
-//   const hp = pokemon.stats[0].base_stat
-
-//   pokeImg.src = image
-//   pokeName.innerHTML = name
-//   pokeHp.innerHTML = `${hp}hp`
-// })
-
+// basePair.addEventListener("select", getExchangeRate);
+basePair.addEventListener("change", getExchangeRate);
 
 // let basePair = "USD"
-// getExchangeRate(basePair)
+getExchangeRate()
